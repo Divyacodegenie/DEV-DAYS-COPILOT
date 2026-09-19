@@ -42,6 +42,8 @@ npm run build      # prebuild migrates + seeds, then builds the static site
 npm run preview
 ```
 
+You can also narrow the homepage list by category and publisher via the filter controls in the browser or by setting query parameters such as `?category=1&publisher=2`.
+
 ## Database
 
 The SQLite database is built from `db/games.csv` — there is no live data to migrate.

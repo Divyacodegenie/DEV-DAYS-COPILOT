@@ -53,6 +53,37 @@ test.describe('Game Listing and Navigation', () => {
     });
   });
 
+  test('should filter games by category and publisher', async ({ page }) => {
+    await page.goto('/');
+
+    const categorySelect = page.getByTestId('category-filter');
+    const publisherSelect = page.getByTestId('publisher-filter');
+    await expect(categorySelect).toBeVisible();
+    await expect(publisherSelect).toBeVisible();
+
+    const firstCategoryOption = categorySelect.locator('option').nth(1);
+    const firstPublisherOption = publisherSelect.locator('option').nth(1);
+    const categoryLabel = (await firstCategoryOption.textContent())?.trim();
+    const publisherLabel = (await firstPublisherOption.textContent())?.trim();
+
+    expect(categoryLabel).toBeTruthy();
+    expect(publisherLabel).toBeTruthy();
+
+    await categorySelect.selectOption({ label: categoryLabel ?? '' });
+    await publisherSelect.selectOption({ label: publisherLabel ?? '' });
+    await page.getByTestId('apply-filters-button').click();
+
+    await expect(page).toHaveURL(/\?category=\d+&publisher=\d+/);
+    await expect(page.getByTestId('clear-filters')).toBeVisible();
+
+    const visibleCount = await page.locator('[data-testid="game-card"]').evaluateAll((elements) =>
+      elements.filter((element) => !element.hasAttribute('hidden') && element.getClientRects().length > 0).length,
+    );
+
+    expect(visibleCount).toBeGreaterThan(0);
+    await expect(page.getByTestId('games-empty-state')).toBeHidden();
+  });
+
   test('should display game details with all required information', async ({ page }) => {
     await test.step('Navigate to specific game details page', async () => {
       await page.goto('/game/1');
