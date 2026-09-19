@@ -14,6 +14,12 @@ This is a crowdfunding platform for games with a developer theme. The applicatio
 
 ## Code standards
 
+### Source of truth
+
+- The repository-level guidance lives in `.github/copilot-instructions.md` and the task-specific instruction files under `.github/instructions/`.
+- Update these instruction files together whenever the project architecture, tooling, or contribution standards change.
+- Treat the instruction files as the canonical rules for coding tasks, tests, styling, and accessibility in this repository.
+
 ### Required Before Each Commit
 
 #### Testing guidelines
