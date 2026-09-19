@@ -20,6 +20,12 @@ Refer to technology-specific instruction files:
 
 ## Core Principles
 
+### Repository Standards
+
+- Treat the instruction files in `.github/instructions/` as the canonical project standards for Astro, styling, data access, and tests.
+- Keep the standards aligned with the codebase architecture: static Astro pages, Tailwind utility styling, and SQLite-driven build-time data.
+- When adding new patterns or tools, update the matching instruction file in the same change so contributors do not work from stale guidance.
+
 ### Testability
 
 - Every interactive element MUST include a `data-testid` attribute
